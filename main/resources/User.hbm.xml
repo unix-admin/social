@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="md.zorych.social.models.User" table="user">
+    <id column="id" name="id" type="java.lang.Integer">
+    <generator class="identity"/>
+    </id>
+        <property column="username" name="username" type="java.lang.String" unique="true"/>
+        <property column="password" name="password" type="java.lang.String"/>
+        <property column="date_birth" name="date_birth" type="java.util.Date" />
+        <property column="e_mail" name="e_mail" type="java.lang.String" unique="true"/>
+        <property column="name" name="name" type="java.lang.String"/>
+        <property column="surname" name="surname" type="java.lang.String"/>
+        <property column="city_id" name="city_id" type="java.lang.Integer"/>
+        <property column="avatar" name="avatar" type="java.lang.String"/>
+        <set name="userRole" table="roles" lazy="false">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="md.zorych.social.models.UserRoles" />
+        </set>
+        <set name="userPhotos" table="photos" lazy="false">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="md.zorych.social.models.Photos" />
+        </set>
+        <set name="userWall" table="user_wall" lazy="false">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="md.zorych.social.models.UserWall" />
+        </set>
+        <set name="friends" table="friendship" lazy="false">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="md.zorych.social.models.Friendship"/>
+        </set>
+        <set name="friendshipRequests" table="friendship_requests" lazy="false">
+            <key>
+                <column name="to_user_id" not-null="true"/>
+            </key>
+            <one-to-many class="md.zorych.social.models.FriendshipRequests"/>
+        </set>
+            </class>
+</hibernate-mapping>

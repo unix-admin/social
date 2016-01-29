@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="md.zorych.social.models.FriendshipRequests" table="friendship_requests">
+    <id column="id" name="id" type="java.lang.Integer">
+    <generator class="increment"/>
+    </id>
+        <many-to-one name="toUrer" column="to_user_id" class="md.zorych.social.models.User" not-null="true" lazy="false"/>
+        <many-to-one name="fromUser" column="from_user_id" class="md.zorych.social.models.User" not-null="true" lazy="false"/>
+    </class>
+</hibernate-mapping>

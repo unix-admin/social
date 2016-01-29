@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="md.zorych.social.models.Photos" table="photos">
+    <id column="id" name="id" type="java.lang.Integer">
+    <generator class="increment"/>
+    </id>
+        <property column="user_id" name="user_id" type="java.lang.Integer"/>
+        <property column="path" name="path" type="java.lang.String"/>
+        
+    </class>
+</hibernate-mapping>

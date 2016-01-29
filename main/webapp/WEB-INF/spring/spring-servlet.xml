@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="default"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <context:annotation-config />
+    <mvc:resources mapping="/resources/**" location="WEB-INF/resources/" />
+    <mvc:annotation-driven />
+    <mvc:resources mapping="/photo/**" location="WEB-INF/photo/" />
+    <mvc:annotation-driven />
+
+    <context:component-scan base-package="md.zorych" />
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.0.0.10/social?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="social"/>
+        <property name="password" value="1"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+
+    <tx:annotation-driven />
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="UserRoleService" class="md.zorych.social.services.UserRoleServiceImpl"/>
+    <bean id="UserRoleDao" class="md.zorych.social.dao.UserRolesDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="UserService" class="md.zorych.social.services.UserServiceImpl"/>
+
+    <bean id="UserDetailsService" class="md.zorych.social.services.UserDetailsServiceImpl"/>
+
+    <bean id="userDAO" class="md.zorych.social.dao.UserDAOImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="UserPhotosService" class="md.zorych.social.services.UserPhotosServiceImpl"/>
+    <bean id="userPhotosDao" class="md.zorych.social.dao.UserPhotosDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+
+    <bean id="FriendsService" class="md.zorych.social.services.FriendsServiceImpl"/>
+    <bean id="FriendsDao" class="md.zorych.social.dao.FriendsDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+
+    <bean id="UserWallService" class="md.zorych.social.services.UserWallServiceImpl"/>
+    <bean id="userWallDao" class="md.zorych.social.dao.UserWallDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="FriendshipRequestService" class="md.zorych.social.services.FriendshipRequestServiceImpl"/>
+    <bean id="friendshipRequestsDao" class="md.zorych.social.dao.FriendshipRequestsDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <bean id="viewResolver"
+    class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/jsp/" />
+    <property name="suffix" value=".jsp" />
+</bean>
+
+
+        </beans>
